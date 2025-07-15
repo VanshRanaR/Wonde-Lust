@@ -77,7 +77,7 @@ Open in browser:
 arduino
 Copy
 Edit
-http://localhost:3000
+
 ✅ To Do
  Add authentication & authorization
 
