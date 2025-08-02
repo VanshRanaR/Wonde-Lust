@@ -112,13 +112,4 @@ Edit
 
 ---
 
-Let me know if you'd like this README to include badges (like GitHub stars, forks, or deployment status), or deployment instructions (if hosted on Render, Vercel, or elsewhere).
 
-
-
-
-
-
-
-
-Ask ChatGPT
