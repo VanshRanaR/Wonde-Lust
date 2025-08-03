@@ -1,5 +1,5 @@
 # Under Developing
-# 🌍 Wonde-Lust
+#  Wonder-Lust
 
 **Wonde-Lust** is a full-stack travel listing web application where users can explore destinations, view listings, and manage their own travel spots. Built with **Node.js**, **Express**, **MongoDB**, and **EJS**.
 
