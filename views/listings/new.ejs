@@ -2,7 +2,7 @@
 <body class="container mt-5">
     <h3 class="mb-4">Create a New Listing</h3>
 
-    <form method="POST" action="/listings" class="p-4 border rounded shadow-sm bg-light">
+    <form method="POST" action="/listings" class="p-4 border rounded shadow-sm bg-light needs-validation" novalidate>
         
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
@@ -11,12 +11,12 @@
 
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="listing[description]" id="description" class="form-control" placeholder="Enter description" rows="3"></textarea>
+            <textarea name="listing[description]" id="description" class="form-control" placeholder="Enter description" rows="3" required></textarea>
         </div>
 
         <div class="mb-3">
             <label for="imageUrl" class="form-label">Image URL</label>
-            <input name="listing[image][url]" id="imageUrl" class="form-control" placeholder="Image URL" required>
+            <input name="listing[image][url]" id="imageUrl" class="form-control" placeholder="Image URL" required>        
         </div>
 
         <div class="mb-3">
@@ -26,20 +26,19 @@
 
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
-            <input name="listing[price]" id="price" type="number" class="form-control" placeholder="Enter price">
+            <input name="listing[price]" id="price" type="number" class="form-control" placeholder="Enter price" required>
         </div>
 
         <div class="mb-3">
             <label for="country" class="form-label">Country</label>
-            <input name="listing[country]" id="country" class="form-control" placeholder="Enter country name">
-        </div>
+            <input name="listing[country]" id="country" class="form-control" placeholder="Enter country name" required>
+        </div> 
 
         <div class="mb-3">
             <label for="location" class="form-label">Location</label>
-            <input name="listing[location]" id="location" class="form-control" placeholder="Enter location">
+            <input name="listing[location]" id="location" class="form-control" placeholder="Enter location" required>
         </div>
 
         <button type="submit" class="btn btn-danger custom-airbnb-btn">Add</button>
     </form>
 </body>
-</html>
