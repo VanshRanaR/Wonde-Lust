@@ -1,28 +1,24 @@
 <% layout("/layouts/boilerplate") %>
 <body>
    <h3>All Listings</h3>
-   <!-- <form method="get" action="/listings/new">
-    <button>Create New Listing</button>
-   </form> -->
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-<% for (let listing of alllistings) { %>
-<a href="/listings/<%= listing._id %>" class="listing-link">
-<div class="card col" >
- <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
- <div class="card-img-overlay"></div>
-  <div class="card-body">
-    <b><p class="card-text"><%= listing.title %></b>
-      <br>
-      &#8377;<%= listing.price.toLocaleString("en-IN")%>/night
-   </p>
-  </div>
-</div>
-</a>
-<% } %>
-</div>
-
-
+   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+   <% for (let listing of alllistings) { %>
+      <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
+         <div class="card col mb-4">
+            <img src="<%= listing.image?.url || 'https://via.placeholder.com/300x200?text=No+Image' %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
+            <div class="card-body">
+               <p class="card-text">
+                  <strong><%= listing.title || "No Title" %></strong><br>
+                  <% if (listing.price != null) { %>
+                     &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
+                  <% } else { %>
+                     <span class="text-muted">Price not available</span>
+                  <% } %>
+               </p>
+            </div>
+         </div>
+      </a>
+   <% } %>
+   </div>
 </body>
-
-
