@@ -5,8 +5,18 @@
    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
    <% for (let listing of alllistings) { %>
       <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
-         <div class="card col mb-4">
-            <img src="<%= listing.image?.url || 'https://via.placeholder.com/300x200?text=No+Image' %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
+         <div class="card col mb-4" style="position: relative; overflow: hidden; border-radius: 1rem;">
+            
+            <!-- Image -->
+            <img src="<%= listing.image?.url || 'https://via.placeholder.com/300x200?text=No+Image' %>" 
+                 class="card-img-top" 
+                 alt="listing_image" 
+                 style="height: 20rem; object-fit: cover; border-radius: 1rem;">
+
+            <!-- 🔥 Overlay -->
+            <div class="card-img-overlay"></div>
+
+            <!-- Body -->
             <div class="card-body">
                <p class="card-text">
                   <strong><%= listing.title || "No Title" %></strong><br>
