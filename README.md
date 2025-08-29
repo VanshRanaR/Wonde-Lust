@@ -1,5 +1,5 @@
 # Under Developing
-#  Wonder-Lust
+# 🌍 Wonde-Lust
 
 **Wonde-Lust** is a full-stack travel listing web application where users can explore destinations, view listings, and manage their own travel spots. Built with **Node.js**, **Express**, **MongoDB**, and **EJS**.
 
@@ -9,13 +9,13 @@
 - 📷 Upload images for listings (using Cloudinary)
 - 🛡️ Input validation and error handling.
 - 🧑‍💻 RESTful routing and controller structure
-- 🌍 Dynamic UI with EJS templating.
+- 🌍 Dynamic UI with EJS templating
 - 📦 MongoDB with Mongoose for database modeling
 - 🧼 Server-side form sanitation
 
 ## 🛠️ Tech Stack
 
-| Layer      | Technologies                              |
+| Layer      | .Technologies                              |
 |------------|-------------------------------------------|
 | Frontend   | HTML, CSS, Bootstrap, EJS                 |
 | Backend    | Node.js, Express.js                       |
@@ -112,4 +112,13 @@ Edit
 
 ---
 
+Let me know if you'd like this README to include badges (like GitHub stars, forks, or deployment status), or deployment instructions (if hosted on Render, Vercel, or elsewhere).
 
+
+
+
+
+
+
+
+Ask ChatGPT
