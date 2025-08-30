@@ -19,7 +19,7 @@ router.delete("/reviews/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
     await Review.findByIdAndDelete(id);
     await Listing.updateMany({ reviews: id }, { $pull: { reviews: id } });
-    res.redirect("back");
+     res.redirect(`/listings/${listingId}`);
 }));
 
 module.exports = router;
