@@ -8,8 +8,10 @@ const ExpressError = require("./utils/ExpressError");
 
 const listingRoutes = require("./routes/listings");
 const reviewRoutes = require("./routes/reviews");
-
+const session= require("express-session")
 const MONGO_URL = "mongodb://127.0.0.1:27017/YOYO";
+const flash = require("connect-flash");
+app.use(flash());
 
 // Middleware
 app.set("view engine", "ejs");
@@ -19,11 +21,31 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 
+const sessionOptions ={
+    secret: "musuperscrectcode",
+    resave: false,
+    saveUninitialized: true,
+ 
+    cookie:{
+
+        expires :Date.now()+7*24*60*60*1000,
+        maxAge:7*24*60*60*1000,
+        httpOnly:true,
+    },
+
+};
+
+app.use(session(sessionOptions));
 // MongoDB connection
 mongoose.connect(MONGO_URL)
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("Connection error:", err));
 
+//flash
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success");
+    next();
+});
 // Routes
 app.use("/listings", listingRoutes);  // important: prefix is /listings
 app.use("/", reviewRoutes);           // review routes handle /listings/:id/reviews

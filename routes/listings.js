@@ -20,7 +20,9 @@ router.post("/", wrapAsync(async (req, res) => {
     if (error) throw new ExpressError(400, error);
     const newListing = new Listing(req.body.listing);
     await newListing.save();
-    res.redirect("/listings");
+    req.flash("success", "Successfully created a new listing!");
+    res.redirect(`/listings/${newListing._id}`);
+   
 }));
 
 // Show single listing
@@ -38,12 +40,14 @@ router.get("/:id/edit", wrapAsync(async (req, res) => {
 // Update listing
 router.put("/:id", wrapAsync(async (req, res) => {
     await Listing.findByIdAndUpdate(req.params.id, req.body.listing);
+        req.flash("success","Listing Updated")
     res.redirect(`/listings/${req.params.id}`);
 }));
 
 // Delete listing
 router.delete("/:id", wrapAsync(async (req, res) => {
     await Listing.findByIdAndDelete(req.params.id);
+        req.flash("success"," Listing Deleted")
     res.redirect("/listings");
 }));
 
