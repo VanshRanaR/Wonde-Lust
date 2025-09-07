@@ -11,7 +11,7 @@
 - 🧑‍💻 RESTful routing and controller structure
 - 🌍 Dynamic UI with EJS templating
 - 📦 MongoDB with Mongoose for database modeling
-- 🧼 Server-side form sanitation
+- 🧼 Server-side form sanitation.
 
 ## 🛠️ Tech Stack
 
