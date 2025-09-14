@@ -1,0 +1,72 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="row mt-5">
+  <div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+    <div class="card shadow-lg border-0 rounded-4">
+      <div class="card-body p-4">
+        <h2 class="text-center mb-4 fw-bold">Create an Account</h2>
+
+        <form action="/signup" method="POST" class="needs-validation" novalidate>
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="username" class="form-label fw-semibold">Username</label>
+            <input
+              name="username"
+              id="username"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Enter your username"
+              required
+            />
+            <div class="invalid-feedback">Please enter a username.</div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email</label>
+            <input
+              name="email"
+              id="email"
+              type="email"
+              class="form-control form-control-lg"
+              placeholder="you@example.com"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label fw-semibold">Password</label>
+            <input
+              name="password"
+              id="password"
+              type="password"
+              class="form-control form-control-lg"
+              placeholder="••••••••"
+              required
+            />
+            <div class="invalid-feedback">Password is required.</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary btn-lg">
+              Sign Up
+            </button>
+          </div>
+        </form>
+
+        <!-- Extra Links -->
+        <div class="text-center">
+          <p class="small mb-1">Already have an account? 
+            <a href="/login" class="fw-semibold">Log In</a>
+          </p>
+          <p class="small text-muted">By signing up, you agree to our 
+            <a href="#">Terms</a> & <a href="#">Privacy Policy</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
