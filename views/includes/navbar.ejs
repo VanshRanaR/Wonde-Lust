@@ -1,39 +1,37 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-  <div class="container">
-    <!-- Brand / Logo -->
-    <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="/">
-      <i class="fa-regular fa-compass me-2 fs-4 text-danger"></i> WONDER-LUST
-    </a>
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="fa-regular fa-compass"></i> WONDER-LUST
+        </a>
+        <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <!-- Left side links -->
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/listings">All Listings</a>
+                <a class="nav-link" href="/listings/new">Add New Listing</a>
+            </div>
 
-    <!-- Toggler -->
-    <button 
-      class="navbar-toggler" 
-      type="button" 
-      data-bs-toggle="collapse" 
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar Links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link fw-semibold" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold" href="/listings">All Listings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fw-semibold" href="/listings/new">Add New Listing</a>
-        </li>
-      </ul>
-
-      <!-- Right side buttons -->
-      
+            <!-- Right side links -->
+            <div class="navbar-nav ms-auto">
+                <% if(!currentUser){ %>
+                    <a class="nav-link" href="/signup">Sign up</a>
+                    <a class="nav-link" href="/login">Login</a>
+                <% } else { %>
+                    <span class="nav-link">Welcome, <%= currentUser.username %></span>
+                    <a class="nav-link" href="/logout">Logout</a>
+                <% } %>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
