@@ -13,7 +13,7 @@ const flash = require("connect-flash");
 
 // Routes
 const listingRoutes = require("./routes/listings");
-const reviewRoutes = require("./routes/reviews");
+const reviewRoutes = require("./routes/reviews"); // ✅ nested reviews route
 const userRoutes = require("./routes/user");
 
 // MongoDB connection
@@ -54,17 +54,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Flash middleware (must come BEFORE routes)
+// Global middleware (flash + currentUser)
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success"); // success flash
-  res.locals.error = req.flash("error");     // error flash
-  res.locals.currentUser = req.user;         // optional: for navbar login state
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user;
   next();
 });
 
 // Routes
 app.use("/listings", listingRoutes);
-app.use("/", reviewRoutes);
+app.use("/listings/:id/reviews", reviewRoutes); // ✅ nested reviews
 app.use("/", userRoutes);
 
 // Home redirect

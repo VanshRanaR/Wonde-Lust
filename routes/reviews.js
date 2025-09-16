@@ -1,27 +1,24 @@
+// routes/reviews.js
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true }); // IMPORTANT
 const Listing = require("../models/listing");
 const Review = require("../models/review");
+const { isLoggedIn } = require("../middleware");
 const wrapAsync = require("../utils/wrapAsync");
 
-// Add review
-router.post("/listings/:id/reviews", wrapAsync(async (req, res) => {
+// POST /listings/:id/reviews
+router.post("/", isLoggedIn, wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
-    const newReview = new Review(req.body.review);
-    await newReview.save();
-    listing.reviews.push(newReview);
-    await listing.save({ validateBeforeSave: false });
-    req.flash("success"," Review created")
-    res.redirect(`/listings/${listing._id}`);
-}));
 
-// Delete review
-router.delete("/reviews/:id", wrapAsync(async (req, res) => {
-    const { id } = req.params;
-    await Review.findByIdAndDelete(id);
-    await Listing.updateMany({ reviews: id }, { $pull: { reviews: id } });
-    req.flash("success"," Review Deleted")
-     res.redirect(`/listings/${listingId}`);
+    const review = new Review(req.body.review);
+    review.author = req.user._id; // assign logged in user as author
+    listing.reviews.push(review);
+
+    await review.save();
+    await listing.save();
+
+    req.flash("success", "Review added!");
+    res.redirect(`/listings/${listing._id}`);
 }));
 
 module.exports = router;

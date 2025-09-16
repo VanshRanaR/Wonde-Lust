@@ -37,9 +37,11 @@ router.post(
 // Show single listing
 router.get("/:id", wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id)
-        .populate("reviews")
-        .populate({ path: "owner" })
-        .populate({ path: "reviews", populate: { path: "author" } });
+        .populate("owner") // ✅ make sure owner is populated
+        .populate({
+            path: "reviews",
+            populate: { path: "author" }
+        });
 
     if (!listing) {
         req.flash("error", "Cannot find that listing!");
