@@ -8,7 +8,7 @@
 - 🏕️ Create, Read, Update, Delete travel listings
 - 📷 Upload images for listings (using Cloudinary)
 - 🛡️ Input validation and error handling.
-- 🧑‍💻 RESTful routing and controller structure
+- 🧑‍💻 RESTful routing and controller structure.
 - 🌍 Dynamic UI with EJS templating
 - 📦 MongoDB with Mongoose for database modeling
 - 🧼 Server-side form sanitation.
