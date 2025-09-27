@@ -1,0 +1,45 @@
+const User = require("../models/user.js");
+
+module.exports = {
+    renderSignup: (req, res) => {
+        res.render("users/signup.ejs");
+    },
+
+    signup: async (req, res, next) => {
+        try {
+            const { username, email, password } = req.body;
+            const newUser = new User({ email, username });
+            const registeredUser = await User.register(newUser, password);
+
+            req.login(registeredUser, (err) => {
+                if (err) return next(err);
+                req.flash("success", "Welcome to Wanderlust!");
+                res.redirect("/listings");
+            });
+        } catch (e) {
+            if (e.name === "UserExistsError") {
+                req.flash("error", "A user with that email already exists!");
+                return res.redirect("/signup");
+            }
+            next(e);
+        }
+    },
+
+    renderLogin: (req, res) => {
+        res.render("users/login.ejs");
+    },
+
+    login: (req, res) => {
+        req.flash("success", "Welcome back!");
+        const redirectUrl = res.locals.redirectUrl || "/listings";
+        res.redirect(redirectUrl);
+    },
+
+    logout: (req, res, next) => {
+        req.logout(function(err) {
+            if (err) return next(err);
+            req.flash("success", "You have logged out!");
+            res.redirect("/listings");
+        });
+    }
+};

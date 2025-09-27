@@ -1,24 +1,18 @@
 // routes/reviews.js
 const express = require("express");
-const router = express.Router({ mergeParams: true }); // IMPORTANT
-const Listing = require("../models/listing");
-const Review = require("../models/review");
-const { isLoggedIn } = require("../middleware");
+const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync");
+const { isLoggedIn } = require("../middleware");
+const reviewsController = require("../controllers/reviews.js");
 
-// POST /listings/:id/reviews
-router.post("/", isLoggedIn, wrapAsync(async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
+// Use router.route() for all actions on reviews of a listing
+router
+  .route("/")
+  .get(wrapAsync(reviewsController.getReviews)) // GET all reviews
+  .post(isLoggedIn, wrapAsync(reviewsController.createReview)); // POST a new review
 
-    const review = new Review(req.body.review);
-    review.author = req.user._id; // assign logged in user as author
-    listing.reviews.push(review);
-
-    await review.save();
-    await listing.save();
-
-    req.flash("success", "Review added!");
-    res.redirect(`/listings/${listing._id}`);
-}));
+router
+  .route("/:reviewId")
+  .delete(wrapAsync(reviewsController.deleteReview)); // DELETE a review
 
 module.exports = router;

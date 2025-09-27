@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const review = require("./review");
 const Schema = mongoose.Schema;
 
 const listingSchema = new Schema({
@@ -9,28 +8,20 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    filename: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
+    filename: String, // The original filename or the Cloudinary public_id
+    url: String,      // The Cloudinary secure URL
   },
   price: Number,
   location: String,
   country: String,
-   reviews:[{
-    type : Schema.Types.ObjectId,
+  reviews: [{
+    type: Schema.Types.ObjectId,
     ref: "Review"
-
-}],
-owner:{
-    type:Schema.Types.ObjectId,
-    ref:"User",  
-},
-  
+  }],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",  
+  },
 });
 
 const Listing = mongoose.model("Listing", listingSchema);

@@ -2,8 +2,11 @@
 <body class="container mt-5">
     <h3 class="mb-4">Create a New Listing</h3>
 
-    <form method="POST" action="/listings" class="p-4 border rounded shadow-sm bg-light needs-validation" novalidate>
+    <!-- Form with file upload enabled -->
+    <form method="POST" action="/listings" class="p-4 border rounded shadow-sm bg-light needs-validation" novalidate  
+    enctype="multipart/form-data">
         
+        <!-- Title -->
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input name="listing[title]" id="title" class="form-control" placeholder="Enter title" required>
@@ -11,6 +14,7 @@
             <div class="invalid-feedback">Please enter a title.</div>
         </div>
 
+        <!-- Description -->
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea name="listing[description]" id="description" class="form-control" placeholder="Enter description" rows="3" required></textarea>
@@ -18,27 +22,30 @@
             <div class="invalid-feedback">Please enter a description.</div>
         </div>
 
+        <!-- Image Upload (file instead of URL + filename) -->
         <div class="mb-3">
-            <label for="imageUrl" class="form-label">Image URL</label>
-            <input name="listing[image][url]" id="imageUrl" class="form-control" placeholder="Image URL" required>
-            <div class="valid-feedback">Image URL looks good.</div>
-            <div class="invalid-feedback">Please provide an image URL.</div>
+            <label for="image" class="form-label">Upload Image</label>
+            <input 
+                type="file" 
+                name="listing[image]" 
+                id="image" 
+                class="form-control" 
+                accept="image/*" 
+                required
+            >
+            <div class="valid-feedback">Image uploaded successfully.</div>
+            <div class="invalid-feedback">Please upload an image file.</div>
         </div>
 
-        <div class="mb-3">
-            <label for="imageFilename" class="form-label">Image Filename</label>
-            <input name="listing[image][filename]" id="imageFilename" class="form-control" placeholder="Image Filename" required>
-            <div class="valid-feedback">Filename looks good.</div>
-            <div class="invalid-feedback">Please enter an image filename.</div>
-        </div>
-
+        <!-- Price -->
         <div class="mb-3">
             <label for="price" class="form-label">Price</label>
-            <input name="listing[price]" id="price"  class="form-control" placeholder="Enter price" required>
+            <input name="listing[price]" id="price" class="form-control" placeholder="Enter price" required>
             <div class="valid-feedback">Price looks valid.</div>
             <div class="invalid-feedback">Please enter a valid price.</div>
         </div>
 
+        <!-- Country -->
         <div class="mb-3">
             <label for="country" class="form-label">Country</label>
             <input name="listing[country]" id="country" class="form-control" placeholder="Enter country name" required>
@@ -46,6 +53,7 @@
             <div class="invalid-feedback">Please enter a country name.</div>
         </div> 
 
+        <!-- Location -->
         <div class="mb-3">
             <label for="location" class="form-label">Location</label>
             <input name="listing[location]" id="location" class="form-control" placeholder="Enter location" required>
@@ -53,6 +61,7 @@
             <div class="invalid-feedback">Please enter a location.</div>
         </div>
 
+        <!-- Submit Button -->
         <button type="submit" class="btn btn-danger custom-airbnb-btn">Add</button>
     </form>
 </body>

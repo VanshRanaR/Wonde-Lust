@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -10,6 +15,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const session = require("express-session");
 const flash = require("connect-flash");
+
 
 // Routes
 const listingRoutes = require("./routes/listings");
@@ -80,4 +86,4 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(8080, () => console.log("Server running on port 8080"));
+app.listen(8080, () => console.log("Server r unning on port 8080"));
