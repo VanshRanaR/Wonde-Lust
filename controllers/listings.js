@@ -20,34 +20,45 @@ module.exports = {
   },
 
   // Create a new listing
-  createListing: async (req, res, next) => {
-    try {
-      // Validate text fields
-      const { error } = listingSchema.validate(req.body);
-      if (error) {
-        const msg = error.details.map(el => el.message).join(", ");
-        throw new ExpressError(msg, 400);
-      }
+createListing: async (req, res, next) => {
+  try {
+    console.log("REQ.BODY.LISTING:", req.body.listing);
+    console.log("REQ.FILE:", req.file);
 
-      // Check if file is uploaded
-      if (!req.file) {
-        req.flash("error", "Listing image is required!");
-        return res.redirect("/listings/new");
-      }
+    // Convert price to number
+    const listingData = { ...req.body.listing };
+    listingData.price = Number(listingData.price);
 
-      // Create listing
-      const { path: url, filename } = req.file;
-      const newListing = new Listing(req.body.listing);
-      newListing.owner = req.user._id;
-      newListing.image = { url, filename };
-
-      await newListing.save();
-      req.flash("success", "Successfully created a new listing!");
-      res.redirect(`/listings/${newListing._id}`);
-    } catch (err) {
-      next(err);
+    // Validate
+    const { error } = listingSchema.validate({ listing: listingData });
+    if (error) {
+      const msg = error.details.map(el => el.message).join(", ");
+      throw new ExpressError(msg, 400);
     }
-  },
+
+    // Check file
+    if (!req.file) {
+      req.flash("error", "Listing image is required!");
+      return res.redirect("/listings/new");
+    }
+
+    // Create listing
+    const { path: url, filename } = req.file;
+    const newListing = new Listing(listingData);
+    newListing.owner = req.user._id;
+    newListing.image = { url, filename };
+
+    await newListing.save();
+    req.flash("success", "Successfully created a new listing!");
+    res.redirect(`/listings/${newListing._id}`);
+  } catch (err) {
+    console.log("ERROR CREATING LISTING:", err);
+    req.flash("error", err.message || "Something went wrong!");
+    res.redirect("/listings/new");
+  }
+}
+,
+
 
   // Show a single listing
   showListing: async (req, res, next) => {

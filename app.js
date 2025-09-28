@@ -1,3 +1,4 @@
+// Load environment variables
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -14,18 +15,22 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const session = require("express-session");
+const mongoStore = require('connect-mongo');
 const flash = require("connect-flash");
-
 
 // Routes
 const listingRoutes = require("./routes/listings");
-const reviewRoutes = require("./routes/reviews"); // ✅ nested reviews route
+const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/user");
+const MongoStore = require("connect-mongo");
 
 // MongoDB connection
-const MONGO_URL = "mongodb://127.0.0.1:27017/YOYO";
+const ATLASDB_URL = process.env.ATLASDB_URL; // ✅ match your .env
 mongoose
-  .connect(MONGO_URL)
+  .connect(ATLASDB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Connection error:", err));
 
@@ -38,9 +43,19 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
-
+const store = MongoStore.create({
+  mongoUrl: ATLASDB_URL,
+  crypto: {
+    secret: "mysupersecretcode",
+  },
+  touchAfter: 24 * 3600,
+});
+store.on("error",()=>{
+  console.log("Error in mongo session",err);
+});
 // Session setup
 const sessionOptions = {
+  store,
   secret: "musuperscrectcode",
   resave: false,
   saveUninitialized: true,
@@ -50,6 +65,8 @@ const sessionOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 };
+
+// const store=MongoStore.create()
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -70,7 +87,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/listings", listingRoutes);
-app.use("/listings/:id/reviews", reviewRoutes); // ✅ nested reviews
+app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/", userRoutes);
 
 // Home redirect
@@ -86,4 +103,5 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(8080, () => console.log("Server r unning on port 8080"));
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
