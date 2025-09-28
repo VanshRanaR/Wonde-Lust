@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "install": "npm install --legacy-peer-deps"
   },
   "keywords": [],
   "author": "Vansh Rana",
   "license": "ISC",
   "description": "Wonder-Lust Travel App",
   "dependencies": {
-    "cloudinary": "^2.7.0",
+    "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
     "dotenv": "^17.2.2",
     "ejs": "^3.1.10",
