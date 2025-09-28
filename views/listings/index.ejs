@@ -1,34 +1,134 @@
 <% layout("/layouts/boilerplate") %>
 <body>
-   <h3>All Listings</h3>
+   <style>
+      /* Filter Bar Container */
+      .filter-bar-wrapper {
+         position: relative;
+         margin-top: 1rem;
+      }
 
-   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-   <% for (let listing of allListings) { %>
-      <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
-         <div class="card col mb-4" style="position: relative; overflow: hidden; border-radius: 1rem;">
-            
-            <!-- Image -->
-            <img src="<%= listing.image?.url || 'https://via.placeholder.com/300x200?text=No+Image' %>" 
-                 class="card-img-top" 
-                 alt="listing_image" 
-                 style="height: 20rem; object-fit: cover; border-radius: 1rem;">
+      .filter-bar {
+         display: flex;
+         gap: 1rem;
+         overflow-x: auto;
+         scrollbar-width: none; /* Firefox */
+         -ms-overflow-style: none;  /* IE/Edge */
+         scroll-behavior: smooth;
+         padding: 0.5rem 2.5rem; /* space for arrows */
+      }
+      .filter-bar::-webkit-scrollbar {
+         display: none; /* Chrome/Safari */
+      }
 
-            <!-- 🔥 Overlay -->
-            <div class="card-img-overlay"></div>
+      .filter {
+         flex: 0 0 auto;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         padding: 0.75rem;
+         border: 1px solid #ddd;
+         border-radius: 1rem;
+         background-color: #fff;
+         cursor: pointer;
+         transition: all 0.2s ease-in-out;
+         width: 80px;
+      }
+      .filter:hover {
+         background-color: #f7f7f7;
+         transform: scale(1.05);
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .filter i {
+         font-size: 1.3rem;
+         margin-bottom: 0.4rem;
+         color: #ff385c;
+      }
+      .filter span {
+         font-size: 0.8rem;
+         text-align: center;
+         color: #333;
+      }
 
-            <!-- Body -->
-            <div class="card-body">
-               <p class="card-text">
-                  <strong><%= listing.title || "No Title" %></strong><br>
-                  <% if (listing.price != null) { %>
-                     &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
-                  <% } else { %>
-                     <span class="text-muted">Price not available</span>
-                  <% } %>
-               </p>
-            </div>
-         </div>
-      </a>
-   <% } %>
+      /* Scroll Buttons */
+      .scroll-btn {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         background: white;
+         border: 1px solid #ddd;
+         border-radius: 50%;
+         padding: 0.5rem 0.7rem;
+         cursor: pointer;
+         box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+         z-index: 10;
+      }
+      .scroll-btn:hover {
+         background: #f7f7f7;
+      }
+      .scroll-btn.left {
+         left: 0.5rem;
+      }
+      .scroll-btn.right {
+         right: 0.5rem;
+      }
+   </style>
+
+   <!-- Filter Bar -->
+   <div class="filter-bar-wrapper">
+      <button class="scroll-btn left" onclick="scrollFilters(-200)"><i class="fas fa-chevron-left"></i></button>
+      <div class="filter-bar" id="filterBar">
+         <div class="filter"><i class="fas fa-dollar-sign"></i><span>Price</span></div>
+         <div class="filter"><i class="fas fa-home"></i><span>Rooms</span></div>
+         <div class="filter"><i class="fas fa-dog"></i><span>Pets</span></div>
+         <div class="filter"><i class="fas fa-swimming-pool"></i><span>Pool</span></div>
+         <div class="filter"><i class="fas fa-tree"></i><span>Outdoors</span></div>
+         <div class="filter"><i class="fas fa-wifi"></i><span>Wi-Fi</span></div>
+         <div class="filter"><i class="fas fa-snowflake"></i><span>AC</span></div>
+         <div class="filter"><i class="fas fa-parking"></i><span>Parking</span></div>
+         <div class="filter"><i class="fas fa-utensils"></i><span>Kitchen</span></div>
+         <div class="filter"><i class="fas fa-umbrella-beach"></i><span>Beachfront</span></div>
+         <div class="filter"><i class="fas fa-spa"></i><span>Luxury</span></div>
+         <div class="filter"><i class="fas fa-fire"></i><span>Fireplace</span></div>
+         <div class="filter"><i class="fas fa-mountain"></i><span>Mountain</span></div>
+         <div class="filter"><i class="fas fa-city"></i><span>City View</span></div>
+         <div class="filter"><i class="fas fa-bicycle"></i><span>Adventure</span></div>
+         <div class="filter"><i class="fas fa-skiing"></i><span>Ski-in/out</span></div>
+         <div class="filter"><i class="fas fa-tv"></i><span>TV</span></div>
+         <div class="filter"><i class="fas fa-bed"></i><span>King Bed</span></div>
+      </div>
+      <button class="scroll-btn right" onclick="scrollFilters(200)"><i class="fas fa-chevron-right"></i></button>
    </div>
+
+   <!-- Listings -->
+   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-3">
+      <% for (let listing of allListings) { %>
+         <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
+            <div class="card col mb-4" style="position: relative; overflow: hidden; border-radius: 1rem;">
+               <img src="<%= listing.image?.url || 'https://via.placeholder.com/300x200?text=No+Image' %>" 
+                    class="card-img-top" 
+                    alt="listing_image" 
+                    style="height: 20rem; object-fit: cover; border-radius: 1rem;">
+               <div class="card-body">
+                  <p class="card-text">
+                     <strong><%= listing.title || "No Title" %></strong><br>
+                     <% if (listing.price != null) { %>
+                        &#8377;<%= listing.price.toLocaleString("en-IN") %>/night
+                     <% } else { %>
+                        <span class="text-muted">Price not available</span>
+                     <% } %>
+                  </p>
+               </div>
+            </div>
+         </a>
+      <% } %>
+   </div>
+
+   <!-- FontAwesome + Scroll Script -->
+   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   <script>
+      function scrollFilters(amount) {
+         document.getElementById("filterBar").scrollBy({ left: amount, behavior: 'smooth' });
+      }
+   </script>
 </body>

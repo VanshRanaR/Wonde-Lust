@@ -66,3 +66,77 @@ body {
     opacity: 0.2;
 }
 
+.nav-link b {
+  font-weight: bold !important;
+}
+ /* Filter Bar Container */
+      .filter-bar-wrapper {
+         position: relative;
+         margin-top: 1rem;
+      }
+
+      .filter-bar {
+         display: flex;
+         gap: 1rem;
+         overflow-x: auto;
+         scrollbar-width: none; /* Firefox */
+         -ms-overflow-style: none;  /* IE/Edge */
+         scroll-behavior: smooth;
+         padding: 0.5rem 2.5rem; /* space for arrows */
+      }
+      .filter-bar::-webkit-scrollbar {
+         display: none; /* Chrome/Safari */
+      }
+
+      .filter {
+         flex: 0 0 auto;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         padding: 0.75rem;
+         border: 1px solid #ddd;
+         border-radius: 1rem;
+         background-color: #fff;
+         cursor: pointer;
+         transition: all 0.2s ease-in-out;
+         width: 80px;
+      }
+      .filter:hover {
+         background-color: #f7f7f7;
+         transform: scale(1.05);
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .filter i {
+         font-size: 1.3rem;
+         margin-bottom: 0.4rem;
+         color: #ff385c;
+      }
+      .filter span {
+         font-size: 0.8rem;
+         text-align: center;
+         color: #333;
+      }
+
+      /* Scroll Buttons */
+      .scroll-btn {
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         background: white;
+         border: 1px solid #ddd;
+         border-radius: 50%;
+         padding: 0.5rem 0.7rem;
+         cursor: pointer;
+         box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+         z-index: 10;
+      }
+      .scroll-btn:hover {
+         background: #f7f7f7;
+      }
+      .scroll-btn.left {
+         left: 0.5rem;
+      }
+      .scroll-btn.right {
+         right: 0.5rem;
+      }
