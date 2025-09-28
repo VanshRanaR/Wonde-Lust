@@ -1,9 +1,12 @@
 {
+  "engines": {
+    "node": "22.16.0"
+  },
   "name": "wonde-lust",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "install": "npm install --legacy-peer-deps"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "Vansh Rana",
