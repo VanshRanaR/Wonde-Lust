@@ -10,7 +10,7 @@ CLICK HERE:- https://wonde-lust-2.onrender.com/listings
 - 🛡️ Input validation and error handling.
 - 🧑‍💻 RESTful routing and controller structure.
 - 🌍 Dynamic UI with EJS templating
-- 📦 MongoDB with Mongoose for database modeling
+- 📦 MongoDB with Mongoose for database modeling.
 - 🧼 Server-side form sanitation.
 
 ## 🛠️ Tech Stack
