@@ -14,15 +14,16 @@ router
 // Login routes
 router
   .route("/login")
-  .get(usersController.renderLogin)              // Render login page
+  .get(usersController.renderLogin)
   .post(
-    saveRedirectUrl,
     passport.authenticate("local", {
       failureRedirect: "/login",
-      failureFlash: "Invalid username or password!"
+      failureFlash: "Invalid username or password!",
     }),
-    usersController.login                          // Handle login
+    saveRedirectUrl,          // ✅ after successful authentication
+    usersController.login
   );
+
 
 // Logout
 router.get("/logout", usersController.logout);
