@@ -10,6 +10,7 @@ const reviewSchema = new Schema({
         ref: "User",   // 👈 reference to User model
         required: true
     }
+    
 });
 
 module.exports = mongoose.model("Review", reviewSchema);

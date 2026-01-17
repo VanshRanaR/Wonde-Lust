@@ -1,7 +1,27 @@
+// controllers/reviews.js
+// const Listing = require("../models/listing");
+// controllers/reviews.js
 const Listing = require("../models/listing");
-const Review = require("../models/review");
+const Review = require("../models/review");   // ✅ MISSING LINE
+
 
 module.exports = {
+    getReviews: async (req, res) => {
+        const { id } = req.params;
+        const listing = await Listing.findById(id)
+            .populate({
+                path: "reviews",
+                populate: { path: "author" }
+            });
+
+        if (!listing) {
+            req.flash("error", "Cannot find that listing!");
+            return res.redirect("/listings");
+        }
+
+        res.render("reviews/index", { listing, reviews: listing.reviews });
+    },
+
     createReview: async (req, res) => {
         const { id } = req.params;
         const listing = await Listing.findById(id);
